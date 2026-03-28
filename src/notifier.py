@@ -44,7 +44,7 @@ def send_to_discord(deals):
                     {"name": "Mức giảm", "value": f"📉 {deal['savings']}%", "inline": True}
                 ],
                 "image": {"url": f"https://cdn.cloudflare.steamstatic.com/steam/apps/{deal['steamAppID']}/header.jpg"},
-                "footer": {"text": "Dữ liệu từ Steam API • By Phu Developer"}
+                "footer": {"text": "Dữ liệu từ Steam API"}
             }
             embeds.append(embed)
 
