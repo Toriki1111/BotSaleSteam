@@ -7,36 +7,29 @@ import pytz
 load_dotenv()
 
 def send_to_discord(deals):
-    webhook_url = os.getenv("DISCORD_WEBHOOK_URL")
-    
-    # Lấy ngày hiện tại theo múi giờ Việt Nam (ICT)
-    vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
-    now = datetime.now(vietnam_tz)
-    date_str = now.strftime("%d/%m/%Y") # Định dạng: Ngày/Tháng/Năm
-
-    payload = {
-        "content": f"📢 **DANH SÁCH DEAL HỜI STEAM - NGÀY {date_str}**\n@everyone Phú ơi, vào check kèo thơm hôm nay nè!",
-        "embeds": []
-    }
-
-def send_to_discord(deals):
-    # Thêm dòng này để ưu tiên lấy từ GitHub Secrets, nếu không có thì lấy từ .env local
-    webhook_url = os.getenv("DISCORD_WEBHOOK") or os.getenv("DISCORD_WEBHOOK_URL")
+    # 1. Lấy Webhook URL (Ưu tiên GitHub Secrets rồi mới đến .env)
+    webhook_url = os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("DISCORD_WEBHOOK")
     
     if not webhook_url:
-        print("Lỗi: Không tìm thấy Webhook URL trong cả .env và GitHub Secrets!")
+        print("Lỗi: Không tìm thấy Webhook URL!")
         return
     
     if not deals:
+        print("Không có deal nào hôm nay.")
         return
-    
-    # Tạo một thông báo đẹp mắt (Embed)
+
+    # 2. Lấy ngày hiện tại Việt Nam (ICT)
+    vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+    now = datetime.now(vietnam_tz)
+    date_str = now.strftime("%d/%m/%Y")
+
+    # 3. Tạo danh sách Embeds (Tối đa 10 cái để tránh lỗi Discord)
     embeds = []
-    for deal in deals[:10]: # Lấy tối đa 10 deal hot nhất
+    for deal in deals[:10]: 
         embed = {
             "title": deal['title'],
             "url": f"https://store.steampowered.com/app/{deal['steamAppID']}",
-            "color": 15158332, # Màu đỏ rực cho deal 90%
+            "color": 15158332, 
             "fields": [
                 {"name": "Giá gốc", "value": f"${deal['normalPrice']}", "inline": True},
                 {"name": "Giá giảm", "value": f"${deal['salePrice']}", "inline": True},
@@ -46,9 +39,15 @@ def send_to_discord(deals):
         }
         embeds.append(embed)
 
+    # 4. Gom tất cả vào Payload (Chèn date_str vào đây)
     payload = {
-        "content": "🔥 **CẢNH BÁO DEAL STEAM > 90% HÔM NAY** 🔥",
+        "content": f"📢 **BẢN TIN DEAL STEAM - NGÀY {date_str}** 📢\n@everyone Phú ơi, vào check kèo thơm hôm nay nè!",
         "embeds": embeds
     }
     
-    requests.post(webhook_url, json=payload)
+    # 5. Gửi lên Discord
+    response = requests.post(webhook_url, json=payload)
+    if response.status_code == 204:
+        print(f"✅ Đã gửi thành công bản tin ngày {date_str}!")
+    else:
+        print(f"❌ Lỗi gửi Discord: {response.status_code}")
