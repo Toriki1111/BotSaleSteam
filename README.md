@@ -1,40 +1,67 @@
 # 🎮 Steam Daily Deal Bot (90%+ Off)
 
-![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-red?style=for-the-badge&logo=githubactions)
 ![Discord](https://img.shields.io/badge/Discord-Webhook-5865F2?style=for-the-badge&logo=discord)
 
-Bot tự động săn các deal game Steam giảm giá cực sâu (trên 90%) và gửi thông báo trực tiếp vào Discord. Dự án chạy hoàn toàn tự động trên Cloud (GitHub Actions).
+Bot tự động quét danh sách các trò chơi đang giảm giá cực sâu (từ 90% trở lên) trên cửa hàng Steam và gửi thông báo chi tiết vào Discord hàng ngày. Dự án được thiết kế để chạy hoàn toàn tự động trên nền tảng đám mây.
+
+---
 
 ## ✨ Tính năng nổi bật
-- **Tự động hóa 100%:** Chạy vào 8:00 AM (giờ Việt Nam) mỗi ngày.
-- **Lọc deal chất lượng:** Chỉ thông báo các game giảm từ 90% trở lên.
-- **Bảo mật tuyệt đối:** Sử dụng Environment Variables để bảo vệ Webhook URL.
-- **Giao diện Discord đẹp:** Thông báo chia theo phần, có hình ảnh minh họa game.
+- **Tự động hóa 100%:** Sử dụng GitHub Actions để tự động kiểm tra deal vào mỗi sáng.
+- **Lọc deal sâu:** Chỉ thông báo những game có mức giảm giá từ 90% trở lên.
+- **Giao diện trực quan:** Thông báo trên Discord hiển thị đầy đủ tiêu đề, giá gốc, giá giảm và ảnh bìa của game.
+- **An toàn & Bảo mật:** Sử dụng biến môi trường (Environment Variables) để bảo vệ thông tin Webhook.
 
-## 🛠️ Yêu cầu hệ thống
-- Python 3.9 trở lên.
-- Một Discord Webhook URL.
+---
 
-## 🚀 Hướng dẫn cài đặt (Cho người mới)
+## 🚀 Hướng dẫn cài đặt (Dành cho người mới)
 
-Vì lý do bảo mật, các file cấu hình cá nhân (`.env`) và thư viện nặng (`.venv`) đã được ẩn đi. Vui lòng làm theo các bước sau để chạy bot:
+Vì lý do bảo mật, các file cấu hình riêng tư (`.env`) và thư viện nặng (`.venv`) không được đưa lên GitHub. Vui lòng làm theo các bước sau để thiết lập:
 
 ### 1. Tải mã nguồn
-Nhấn nút **Code** -> **Download ZIP** ở phía trên và giải nén vào thư mục trên máy bạn.
+- Nhấn nút **Code** -> **Download ZIP** ở góc trên bên phải trang này.
+- Giải nén file vừa tải về máy tính của bạn.
 
-### 2. Cài đặt môi trường
-Mở Terminal/PowerShell tại thư mục dự án và chạy các lệnh sau:
+### 2. Cài đặt Python (Nếu chưa có)
+- Tải và cài đặt Python tại [python.org](https://www.python.org/).
+- **Lưu ý:** Khi cài đặt, hãy tích vào ô **"Add Python to PATH"**.
 
+### 3. Cài đặt thư viện hỗ trợ
+Mở cửa sổ Terminal (hoặc Command Prompt/PowerShell) tại thư mục chứa dự án và chạy lệnh sau:
 ```bash
-# 1. Tạo môi trường ảo (giúp máy sạch sẽ)
-python -m venv .venv
-
-# 2. Kích hoạt môi trường ảo
-# Windows:
-.venv\Scripts\activate
-# Mac/Linux:
-source .venv/bin/activate
-
-# 3. Cài đặt thư viện từ danh sách phụ tùng
 pip install -r requirements.txt
+
+4. Cấu hình địa chỉ nhận tin (Webhook)
+Trong thư mục dự án, tìm file tên là .env.example.
+
+Đổi tên file này thành .env.
+
+Mở file .env bằng Notepad và dán Link Webhook Discord của bạn vào sau dấu =:
+DISCORD_WEBHOOK_URL=[https://discord.com/api/webhooks/your_id_here](https://discord.com/api/webhooks/your_id_here)
+🏃 Cách vận hành
+Chạy thủ công trên máy tính:
+Mở Terminal tại thư mục dự án và gõ lệnh:
+python src/main.py
+Chạy tự động trên GitHub (Khuyên dùng):
+Để bot tự chạy mỗi ngày mà không cần bật máy tính của bạn:
+
+Vào mục Settings -> Secrets and variables -> Actions trên Repository của bạn.
+
+Nhấn New repository secret.
+
+Đặt tên (Name) là: DISCORD_WEBHOOK_URL
+
+Dán link Webhook Discord của bạn vào ô Value.
+
+Nhấn Add secret.
+
+Hệ thống sẽ tự động gửi danh sách deal game vào Discord của bạn hàng ngày theo lịch trình đã định sẵn.
+
+🛠️ Yêu cầu kỹ thuật
+Python 3.9+
+
+Thư viện: requests, python-dotenv, pytz.
+
+Kết nối Internet ổn định.
