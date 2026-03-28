@@ -30,7 +30,7 @@ Vì lý do bảo mật, các file cấu hình riêng tư (`.env`) và thư việ
 
 ### 3. Cài đặt thư viện hỗ trợ
 Mở cửa sổ Terminal (hoặc Command Prompt/PowerShell) tại thư mục chứa dự án và chạy lệnh sau:
-```bash
+
 pip install -r requirements.txt
 
 4. Cấu hình địa chỉ nhận tin (Webhook)
@@ -65,3 +65,4 @@ Python 3.9+
 Thư viện: requests, python-dotenv, pytz.
 
 Kết nối Internet ổn định.
+```bash
