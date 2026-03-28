@@ -53,7 +53,7 @@ def send_to_discord(deals):
         part_number = (i // 10) + 1
         total_parts = (len(deals) + 9) // 10
         
-        content_msg = f"📢 **BẢN TIN DEAL STEAM - NGÀY {date_str} (Phần {part_number}/{total_parts})** 📢\n@everyone Phú ơi, vào check kèo thơm hôm nay nè!" if i == 0 else f"--- Tiếp theo (Phần {part_number}/{total_parts}) ---"
+        content_msg = f"📢 **BẢN TIN DEAL STEAM - NGÀY {date_str} (Phần {part_number}/{total_parts})** 📢\nCheck kèo thơm hôm nay nè!" if i == 0 else f"--- Tiếp theo (Phần {part_number}/{total_parts}) ---"
 
         payload = {
             "content": content_msg,
