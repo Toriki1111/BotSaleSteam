@@ -4,34 +4,37 @@
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-red?style=for-the-badge&logo=githubactions)
 ![Discord](https://img.shields.io/badge/Discord-Webhook-5865F2?style=for-the-badge&logo=discord)
 
-Một con bot tự động quét các giao dịch giảm giá cực hời (trên 90%) từ Steam và gửi thông báo trực tiếp vào Discord mỗi ngày. Dự án sử dụng **Python**, **CheapShark API** và được triển khai hoàn toàn trên **GitHub Actions**.
+Bot tự động săn các deal game Steam giảm giá cực sâu (trên 90%) và gửi thông báo trực tiếp vào Discord. Dự án chạy hoàn toàn tự động trên Cloud (GitHub Actions).
 
 ## ✨ Tính năng nổi bật
-- **Tự động quét deal:** Chạy tự động vào 8:00 AM (giờ Việt Nam) mỗi ngày.
-- **Lọc thông minh:** Chỉ báo các game giảm giá từ 90% trở lên.
-- **Sắp xếp chuyên nghiệp:** Ưu tiên các game giảm sâu nhất lên đầu danh sách.
-- **Phân trang Discord:** Tự động chia nhỏ danh sách (10 deal/tin nhắn) để không vi phạm giới hạn của Discord.
-- **Hỗ trợ múi giờ:** Hiển thị ngày tháng chính xác theo giờ Việt Nam (ICT).
+- **Tự động hóa 100%:** Chạy vào 8:00 AM (giờ Việt Nam) mỗi ngày.
+- **Lọc deal chất lượng:** Chỉ thông báo các game giảm từ 90% trở lên.
+- **Bảo mật tuyệt đối:** Sử dụng Environment Variables để bảo vệ Webhook URL.
+- **Giao diện Discord đẹp:** Thông báo chia theo phần, có hình ảnh minh họa game.
 
-## 🛠️ Công nghệ sử dụng
-- **Ngôn ngữ:** Python 3.11
-- **Thư viện:** `requests`, `pytz`, `python-dotenv`
-- **Tự động hóa:** GitHub Actions (Cron Jobs)
-- **Nguồn dữ liệu:** CheapShark API (Steam Store)
+## 🛠️ Yêu cầu hệ thống
+- Python 3.9 trở lên.
+- Một Discord Webhook URL.
 
-## 🚀 Hướng dẫn cài đặt
+## 🚀 Hướng dẫn cài đặt (Cho người mới)
 
-### 1. Chuẩn bị
-1. Tạo một **Discord Webhook URL** trong server của bạn.
-2. Fork hoặc Clone repository này về máy.
+Vì lý do bảo mật, các file cấu hình cá nhân (`.env`) và thư viện nặng (`.venv`) đã được ẩn đi. Vui lòng làm theo các bước sau để chạy bot:
 
-### 2. Cài đặt môi trường (Local)
+### 1. Tải mã nguồn
+Nhấn nút **Code** -> **Download ZIP** ở phía trên và giải nén vào thư mục trên máy bạn.
+
+### 2. Cài đặt môi trường
+Mở Terminal/PowerShell tại thư mục dự án và chạy các lệnh sau:
+
 ```bash
-# Cài đặt thư viện
+# 1. Tạo môi trường ảo (giúp máy sạch sẽ)
+python -m venv .venv
+
+# 2. Kích hoạt môi trường ảo
+# Windows:
+.venv\Scripts\activate
+# Mac/Linux:
+source .venv/bin/activate
+
+# 3. Cài đặt thư viện từ danh sách phụ tùng
 pip install -r requirements.txt
-
-# Tạo file .env và thêm Webhook của bạn
-echo "DISCORD_WEBHOOK_URL=your_webhook_url_here" > .env
-
-# Chạy thử
-python src/main.py
