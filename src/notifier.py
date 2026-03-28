@@ -1,8 +1,23 @@
 import requests
 import os
 from dotenv import load_dotenv
+from datetime import datetime
+import pytz
 
 load_dotenv()
+
+def send_to_discord(deals):
+    webhook_url = os.getenv("DISCORD_WEBHOOK_URL")
+    
+    # Lấy ngày hiện tại theo múi giờ Việt Nam (ICT)
+    vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+    now = datetime.now(vietnam_tz)
+    date_str = now.strftime("%d/%m/%Y") # Định dạng: Ngày/Tháng/Năm
+
+    payload = {
+        "content": f"📢 **DANH SÁCH DEAL HỜI STEAM - NGÀY {date_str}**\n@everyone Phú ơi, vào check kèo thơm hôm nay nè!",
+        "embeds": []
+    }
 
 def send_to_discord(deals):
     # Thêm dòng này để ưu tiên lấy từ GitHub Secrets, nếu không có thì lấy từ .env local
