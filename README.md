@@ -15,6 +15,12 @@ Bot tự động quét danh sách các trò chơi đang giảm giá cực sâu (
 - **An toàn & Bảo mật:** Sử dụng biến môi trường (Environment Variables) để bảo vệ thông tin Webhook.
 
 ---
+##🛠️ Yêu cầu kỹ thuật
+Python 3.9+
+
+Thư viện: requests, python-dotenv, pytz.
+
+Kết nối Internet ổn định.
 
 ## 🚀 Hướng dẫn cài đặt (Dành cho người mới)
 
@@ -39,7 +45,9 @@ Trong thư mục dự án, tìm file tên là .env.example.
 Đổi tên file này thành .env.
 
 Mở file .env bằng Notepad và dán Link Webhook Discord của bạn vào sau dấu =:
+```bash
 DISCORD_WEBHOOK_URL=[https://discord.com/api/webhooks/your_id_here](https://discord.com/api/webhooks/your_id_here)
+```
 🏃 Cách vận hành
 Chạy thủ công trên máy tính:
 Mở Terminal tại thư mục dự án và gõ lệnh:
@@ -59,10 +67,5 @@ Nhấn Add secret.
 
 Hệ thống sẽ tự động gửi danh sách deal game vào Discord của bạn hàng ngày theo lịch trình đã định sẵn.
 
-🛠️ Yêu cầu kỹ thuật
-Python 3.9+
 
-Thư viện: requests, python-dotenv, pytz.
 
-Kết nối Internet ổn định.
-```bash
