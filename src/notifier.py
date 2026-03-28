@@ -41,7 +41,7 @@ def send_to_discord(deals):
 
     # 4. Gom tất cả vào Payload (Chèn date_str vào đây)
     payload = {
-        "content": f"📢 **BẢN TIN DEAL STEAM - NGÀY {date_str}** 📢\n@everyone Phú ơi, vào check kèo thơm hôm nay nè!",
+        "content": f"📢 **BẢN TIN DEAL STEAM - NGÀY {date_str}** 📢\nCheck kèo thơm hôm nay nè!",
         "embeds": embeds
     }
     
