@@ -2,7 +2,7 @@ name: Steam Daily Deal Bot
 
 on:
   schedule:
-    - cron: '0 1 * * *' # Chạy lúc 8:00 AM giờ VN mỗi ngày
+    - cron: '46 1 * * *' # Chạy lúc 8:46 AM giờ VN mỗi ngày
   workflow_dispatch:      # Nút bấm chạy tay để test trên GitHub
 
 jobs:
