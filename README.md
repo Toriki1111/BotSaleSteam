@@ -68,6 +68,3 @@ Bot tự động quét danh sách các trò chơi đang giảm giá trên cửa 
 ## 🏃 Cách vận hành
 - **Chạy tự động:** Hệ thống sẽ tự động kích hoạt thông qua Cron-job.org theo lịch trình bạn đã đặt.
 - **Chạy thủ công:** Bạn có thể vào tab **Actions** trên GitHub và nhấn **Run workflow** để kiểm tra bot ngay lập tức.
-
----
-*Dự án được thực hiện nhằm mục đích học tập và tối ưu hóa quy trình DevOps trên GitHub.*
