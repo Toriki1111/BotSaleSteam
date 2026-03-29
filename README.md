@@ -11,7 +11,7 @@ Bot tự động quét danh sách các trò chơi đang giảm giá trên cửa 
 ## ⚠️ Lưu ý về các tệp tin không hiển thị
 Để đảm bảo tính bảo mật và tuân thủ quy trình phát triển chuyên nghiệp, một số thành phần sau đây sẽ **không xuất hiện** trên Repository này:
 - **Thư mục `.venv/`:** Chứa các thư viện Python nặng. Người dùng chỉ cần cài đặt lại qua file `requirements.txt`.
-- **Tệp `.env`:** Chứa thông tin nhạy cảm (Webhook URL). Thông tin này được quản lý an toàn qua **GitHub Secrets**.
+- **Tệp `.env`:** Chứa thông tin nhạy cảm. Thay vì dùng tệp này, dự án sử dụng **GitHub Actions Secrets** (Két sắt bảo mật của GitHub) để lưu trữ Webhook URL.
 - **Thư mục `__pycache__/`:** Các tệp tạm tự sinh của hệ thống, không cần thiết cho mã nguồn.
 - **Thư mục `.git/`:** Dữ liệu nội bộ của hệ thống quản lý phiên bản, được GitHub tự động xử lý ẩn.
 
@@ -33,17 +33,25 @@ Bot tự động quét danh sách các trò chơi đang giảm giá trên cửa 
 ---
 
 ## 🚀 Hướng dẫn cài đặt (Dành cho người mới)
+### (Reg:) Tạo Discord Webhook
+Để Bot có thể gửi tin nhắn vào Server của bạn:
+1. Vào **Server Settings** -> **Integrations** -> **Webhooks**.
+2. Nhấn **Create Webhook**, đặt tên cho Bot và chọn kênh nhận tin.
+3. Nhấn **Copy Webhook URL**.
+   - *Ví dụ định dạng (đã che):* `https://discord.com/api/webhooks/123456789/abcXYZ_xxxx_XXXX`
 
 ### 1. Cấu hình địa chỉ nhận tin (Webhook)
 1. Trên GitHub Repository của bạn, vào mục **Settings** -> **Secrets and variables** -> **Actions**.
 2. Nhấn **New repository secret**.
 3. Đặt tên (Name) là: `DISCORD_WEBHOOK_URL`.
 4. Dán link Webhook Discord của bạn vào ô **Value** và nhấn **Add secret**.
+    `https://discord.com/api/webhooks/123456789012345678/ABCDEFG-hijklmnopqrstuvwxyz-123456789`
 
 ### 2. Tạo mã cấp quyền (Personal Access Token)
 1. Vào **Profile Settings** -> **Developer Settings** -> **Personal access tokens (classic)**.
-2. Tạo token mới với quyền `workflow`. 
-3. **Lưu ý:** Copy mã này ngay vì nó chỉ hiển thị 1 lần.
+   Minh họa: `ghp_xxxD3exxxg6Hxxx9k0LxxxN3xxP5q6R7s`
+3. Tạo token mới với quyền `workflow`. 
+4. **Lưu ý:** Copy mã này ngay vì nó chỉ hiển thị 1 lần.
 
 ### 3. Tự động hóa với Cron-job.org
 Để bot chạy đúng giờ mà không phụ thuộc vào hàng đợi của GitHub:
