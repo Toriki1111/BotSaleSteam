@@ -1,71 +1,65 @@
-# 🎮 Steam Daily Deal Bot (90%+ Off)
+# 🎮 Steam Sale Notification Bot (Spidey Bot)
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-red?style=for-the-badge&logo=githubactions)
 ![Discord](https://img.shields.io/badge/Discord-Webhook-5865F2?style=for-the-badge&logo=discord)
 
-Bot tự động quét danh sách các trò chơi đang giảm giá cực sâu (từ 90% trở lên) trên cửa hàng Steam và gửi thông báo chi tiết vào Discord hàng ngày. Dự án được thiết kế để chạy hoàn toàn tự động trên nền tảng đám mây.
+Bot tự động quét danh sách các trò chơi đang giảm giá trên cửa hàng Steam và gửi thông báo chi tiết vào Discord hàng ngày. Dự án được thiết kế để chạy hoàn toàn tự động trên nền tảng đám mây (Serverless), không cần treo máy cá nhân.
+
+---
+
+## ⚠️ Lưu ý về các tệp tin không hiển thị
+Để đảm bảo tính bảo mật và tuân thủ quy trình phát triển chuyên nghiệp, một số thành phần sau đây sẽ **không xuất hiện** trên Repository này:
+- **Thư mục `.venv/`:** Chứa các thư viện Python nặng. Người dùng chỉ cần cài đặt lại qua file `requirements.txt`.
+- **Tệp `.env`:** Chứa thông tin nhạy cảm (Webhook URL). Thông tin này được quản lý an toàn qua **GitHub Secrets**.
+- **Thư mục `__pycache__/`:** Các tệp tạm tự sinh của hệ thống, không cần thiết cho mã nguồn.
+- **Thư mục `.git/`:** Dữ liệu nội bộ của hệ thống quản lý phiên bản, được GitHub tự động xử lý ẩn.
 
 ---
 
 ## ✨ Tính năng nổi bật
-- **Tự động hóa 100%:** Sử dụng GitHub Actions để tự động kiểm tra deal vào mỗi sáng.
-- **Lọc deal sâu:** Chỉ thông báo những game có mức giảm giá từ 90% trở lên.
-- **Giao diện trực quan:** Thông báo trên Discord hiển thị đầy đủ tiêu đề, giá gốc, giá giảm và ảnh bìa của game.
-- **An toàn & Bảo mật:** Sử dụng biến môi trường (Environment Variables) để bảo vệ thông tin Webhook.
+- **Tự động hóa 100%:** Sử dụng GitHub Actions để kiểm tra deal mỗi ngày.
+- **Đúng giờ tuyệt đối:** Kết hợp với **Cron-job.org** để vượt qua giới hạn trễ giờ của hạ tầng GitHub Free.
+- **Giao diện trực quan:** Thông báo Discord hiển thị đầy đủ tiêu đề, giá cũ, giá mới và ảnh bìa game.
+- **An toàn & Bảo mật:** Sử dụng GitHub Secrets để bảo vệ thông tin Webhook và Token.
 
 ---
-##🛠️ Yêu cầu kỹ thuật
-Python 3.9+
 
-Thư viện: requests, python-dotenv, pytz.
+## 🛠️ Yêu cầu kỹ thuật
+- Python 3.9+
+- Thư viện: `requests`, `beautifulsoup4`, `python-dotenv`.
+- Tài khoản GitHub & Webhook Discord.
 
-Kết nối Internet ổn định.
+---
 
 ## 🚀 Hướng dẫn cài đặt (Dành cho người mới)
 
-Vì lý do bảo mật, các file cấu hình riêng tư (`.env`) và thư viện nặng (`.venv`) không được đưa lên GitHub. Vui lòng làm theo các bước sau để thiết lập:
+### 1. Cấu hình địa chỉ nhận tin (Webhook)
+1. Trên GitHub Repository của bạn, vào mục **Settings** -> **Secrets and variables** -> **Actions**.
+2. Nhấn **New repository secret**.
+3. Đặt tên (Name) là: `DISCORD_WEBHOOK_URL`.
+4. Dán link Webhook Discord của bạn vào ô **Value** và nhấn **Add secret**.
 
-### 1. Tải mã nguồn
-- Nhấn nút **Code** -> **Download ZIP** ở góc trên bên phải trang này.
-- Giải nén file vừa tải về máy tính của bạn.
+### 2. Tạo mã cấp quyền (Personal Access Token)
+1. Vào **Profile Settings** -> **Developer Settings** -> **Personal access tokens (classic)**.
+2. Tạo token mới với quyền `workflow`. 
+3. **Lưu ý:** Copy mã này ngay vì nó chỉ hiển thị 1 lần.
 
-### 2. Cài đặt Python (Nếu chưa có)
-- Tải và cài đặt Python tại [python.org](https://www.python.org/).
-- **Lưu ý:** Khi cài đặt, hãy tích vào ô **"Add Python to PATH"**.
+### 3. Tự động hóa với Cron-job.org
+Để bot chạy đúng giờ mà không phụ thuộc vào hàng đợi của GitHub:
+1. Đăng ký tại [Cron-job.org](https://cron-job.org/).
+2. Tạo Job mới với URL API: `https://api.github.com/repos/TÊN_USER/TÊN_REPO/actions/workflows/daily_check.yml/dispatches`.
+3. Cấu hình tại tab **Advanced**:
+   - **Method:** `POST`.
+   - **Headers:** - `Authorization`: `token [Mã_Access_Token_của_bạn]`
+     - `Accept`: `application/vnd.github.v3+json`
+   - **Body (Raw):** `{ "ref": "main" }`
 
-### 3. Cài đặt thư viện hỗ trợ
-Mở cửa sổ Terminal (hoặc Command Prompt/PowerShell) tại thư mục chứa dự án và chạy lệnh sau:
+---
 
-pip install -r requirements.txt
+## 🏃 Cách vận hành
+- **Chạy tự động:** Hệ thống sẽ tự động kích hoạt thông qua Cron-job.org theo lịch trình bạn đã đặt.
+- **Chạy thủ công:** Bạn có thể vào tab **Actions** trên GitHub và nhấn **Run workflow** để kiểm tra bot ngay lập tức.
 
-4. Cấu hình địa chỉ nhận tin (Webhook)
-Trong thư mục dự án, tìm file tên là .env.example.
-
-Đổi tên file này thành .env.
-
-Mở file .env bằng Notepad và dán Link Webhook Discord của bạn vào sau dấu =:
-```bash
-DISCORD_WEBHOOK_URL=[https://discord.com/api/webhooks/your_id_here](https://discord.com/api/webhooks/your_id_here)
-```
-🏃 Cách vận hành
-Chạy thủ công trên máy tính:
-Mở Terminal tại thư mục dự án và gõ lệnh:
-python src/main.py
-Chạy tự động trên GitHub (Khuyên dùng):
-Để bot tự chạy mỗi ngày mà không cần bật máy tính của bạn:
-
-Vào mục Settings -> Secrets and variables -> Actions trên Repository của bạn.
-
-Nhấn New repository secret.
-
-Đặt tên (Name) là: DISCORD_WEBHOOK_URL
-
-Dán link Webhook Discord của bạn vào ô Value.
-
-Nhấn Add secret.
-
-Hệ thống sẽ tự động gửi danh sách deal game vào Discord của bạn hàng ngày theo lịch trình đã định sẵn.
-
-
-
+---
+*Dự án được thực hiện nhằm mục đích học tập và tối ưu hóa quy trình DevOps trên GitHub.*
