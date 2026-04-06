@@ -12,11 +12,11 @@ def send_to_discord(deals):
     webhook_url = os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("DISCORD_WEBHOOK")
     
     if not webhook_url:
-        print("❌ Lỗi: Không tìm thấy Webhook URL trong Secrets hoặc .env!")
+        print("❌ ERR: Cannot found Webhook URL in Secrets or in .env!")
         return
     
     if not deals:
-        print("ℹ️ Không có deal nào để gửi.")
+        print("ℹ️ No deal today")
         return
 
     # 2. Lấy ngày hiện tại theo múi giờ Việt Nam (ICT)
@@ -24,7 +24,7 @@ def send_to_discord(deals):
     now = datetime.now(vietnam_tz)
     date_str = now.strftime("%d/%m/%Y")
 
-    print(f"📡 Đang chuẩn bị gửi {len(deals)} deal lên Discord...")
+    print(f"📡 Prepare to send {len(deals)} deal onto Discord...")
 
     # 3. KỸ THUẬT CHIA NHÓM: Cứ 10 deal gửi 1 tin nhắn (Giới hạn của Discord)
     # range(start, stop, step) -> nhảy bước 10
@@ -39,12 +39,12 @@ def send_to_discord(deals):
                 "url": f"https://store.steampowered.com/app/{deal['steamAppID']}",
                 "color": 15158332, # Màu đỏ rực rỡ
                 "fields": [
-                    {"name": "Giá gốc", "value": f"${deal['normalPrice']}", "inline": True},
-                    {"name": "Giá giảm", "value": f"${deal['salePrice']}", "inline": True},
-                    {"name": "Mức giảm", "value": f"📉 {deal['savings']}%", "inline": True}
+                    {"name": "Original Price", "value": f"${deal['normalPrice']}", "inline": True},
+                    {"name": "Saled Price", "value": f"${deal['salePrice']}", "inline": True},
+                    {"name": "Saving", "value": f"📉 {deal['savings']}%", "inline": True}
                 ],
                 "image": {"url": f"https://cdn.cloudflare.steamstatic.com/steam/apps/{deal['steamAppID']}/header.jpg"},
-                "footer": {"text": "Dữ liệu từ Steam API"}
+                "footer": {"text": "Data from Steam API"}
             }
             embeds.append(embed)
 
@@ -53,7 +53,7 @@ def send_to_discord(deals):
         part_number = (i // 10) + 1
         total_parts = (len(deals) + 9) // 10
         
-        content_msg = f"📢 **BẢN TIN DEAL STEAM - NGÀY {date_str} (Phần {part_number}/{total_parts})** 📢\nCheck kèo thơm hôm nay nè!" if i == 0 else f"--- Tiếp theo (Phần {part_number}/{total_parts}) ---"
+        content_msg = f"📢 **NEWS STEAM DEAL - DATE {date_str} (Part {part_number}/{total_parts})** 📢\nCome get some today deals!" if i == 0 else f"--- NExt (Part {part_number}/{total_parts}) ---"
 
         payload = {
             "content": content_msg,
@@ -64,6 +64,6 @@ def send_to_discord(deals):
         response = requests.post(webhook_url, json=payload)
         
         if response.status_code == 204:
-            print(f"✅ Đã gửi thành công phần {part_number}")
+            print(f"✅ Sent complete part {part_number}")
         else:
-            print(f"❌ Lỗi gửi phần {part_number}: {response.status_code} - {response.text}")
+            print(f"❌ ERR Part {part_number}: {response.status_code} - {response.text}")
