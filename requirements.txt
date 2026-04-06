@@ -1,3 +1,4 @@
+#No need these if u running on Github
 certifi>=2026.0.0
 charset-normalizer>=3.0.0
 idna>=3.0
