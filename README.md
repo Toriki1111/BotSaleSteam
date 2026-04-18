@@ -1,8 +1,8 @@
-# Steam Daily Deal Bot
+# 🎮 Steam Daily Deal Bot
 
 An automated bot that scans Steam deals with discounts of 90% or more and posts them to Discord every day. The project uses Python, the CheapShark API, and GitHub Actions for scheduled runs.
 
-## Features
+## ✨ Features
 
 - Scans Steam deals on a daily GitHub Actions schedule.
 - Filters games with `savings >= 90`.
@@ -10,7 +10,7 @@ An automated bot that scans Steam deals with discounts of 90% or more and posts 
 - Splits Discord messages into multiple parts, up to 10 deals per message.
 - Supports local execution with `.env` and GitHub deployment with Secrets.
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 .
@@ -28,12 +28,12 @@ An automated bot that scans Steam deals with discounts of 90% or more and posts 
 `-- README.vi.md
 ```
 
-## Requirements
+## 🛠 Requirements
 
 - Python 3.11
 - A Discord webhook URL
 
-## Local Setup
+## 🚀 Local Setup
 
 ```bash
 python -m venv .venv
@@ -53,7 +53,7 @@ Run the bot locally:
 python src/main.py
 ```
 
-## GitHub Actions Setup
+## ⚙️ GitHub Actions Setup
 
 Create a repository secret named `DISCORD_WEBHOOK_URL`:
 
@@ -70,7 +70,7 @@ The workflow is defined in [.github/workflows/daily_check.yml](.github/workflows
 
 That corresponds to 08:00 AM Vietnam time when the offset is UTC+7.
 
-## Discord Output
+## 📣 Discord Output
 
 On each run, the bot will:
 
@@ -88,22 +88,22 @@ Each embed contains:
 - Discount percentage
 - Game header image
 
-## No-Deal Behavior
+## ℹ️ No-Deal Behavior
 
 If no deals meet the 90% threshold, the bot only writes a log message and does not send anything to Discord.
 
-## Environment Variables
+## 🔐 Environment Variables
 
 - `DISCORD_WEBHOOK_URL`: primary webhook URL.
 - `DISCORD_WEBHOOK`: fallback variable still accepted by `src/notifier.py`.
 
-## Dependencies
+## 📦 Dependencies
 
 - `requests`
 - `python-dotenv`
 - `pytz`
 
-## Encoding Note
+## 📝 Encoding Note
 
 The repository should be saved in UTF-8. If your terminal displays broken characters, verify:
 
@@ -112,7 +112,7 @@ The repository should be saved in UTF-8. If your terminal displays broken charac
 
 The repository includes [.editorconfig](.editorconfig) to reduce encoding-related issues in future edits.
 
-## Language Versions
+## 🌐 Language Versions
 
 - English: [README.md](README.md)
 - Vietnamese: [README.vi.md](README.vi.md)
