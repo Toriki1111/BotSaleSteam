@@ -1,118 +1,37 @@
-# Steam Daily Deal Bot
+# 🎮 Steam Daily Deal Bot (90%+ Off)
 
-An automated bot that scans Steam deals with discounts of 90% or more and posts them to Discord every day. The project uses Python, the CheapShark API, and GitHub Actions for scheduled runs.
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-red?style=for-the-badge&logo=githubactions)
+![Discord](https://img.shields.io/badge/Discord-Webhook-5865F2?style=for-the-badge&logo=discord)
 
-## Features
+Một con bot tự động quét các giao dịch giảm giá cực hời (trên 90%) từ Steam và gửi thông báo trực tiếp vào Discord mỗi ngày. Dự án sử dụng **Python**, **CheapShark API** và được triển khai hoàn toàn trên **GitHub Actions**.
 
-- Scans Steam deals on a daily GitHub Actions schedule.
-- Filters games with `savings >= 90`.
-- Sorts deals by discount percentage in descending order.
-- Splits Discord messages into multiple parts, up to 10 deals per message.
-- Supports local execution with `.env` and GitHub deployment with Secrets.
+## ✨ Tính năng nổi bật
+- **Tự động quét deal:** Chạy tự động vào 8:00 AM (giờ Việt Nam) mỗi ngày.
+- **Lọc thông minh:** Chỉ báo các game giảm giá từ 90% trở lên.
+- **Sắp xếp chuyên nghiệp:** Ưu tiên các game giảm sâu nhất lên đầu danh sách.
+- **Phân trang Discord:** Tự động chia nhỏ danh sách (10 deal/tin nhắn) để không vi phạm giới hạn của Discord.
+- **Hỗ trợ múi giờ:** Hiển thị ngày tháng chính xác theo giờ Việt Nam (ICT).
 
-## Project Structure
+## 🛠️ Công nghệ sử dụng
+- **Ngôn ngữ:** Python 3.11
+- **Thư viện:** `requests`, `pytz`, `python-dotenv`
+- **Tự động hóa:** GitHub Actions (Cron Jobs)
+- **Nguồn dữ liệu:** CheapShark API (Steam Store)
 
-```text
-.
-|-- .github/
-|   `-- workflows/
-|       `-- daily_check.yml
-|-- src/
-|   |-- main.py
-|   |-- notifier.py
-|   `-- steam_api.py
-|-- .gitignore
-|-- .editorconfig
-|-- requirements.txt
-|-- README.md
-`-- README.vi.md
-```
+## 🚀 Hướng dẫn cài đặt
 
-## Requirements
+### 1. Chuẩn bị
+1. Tạo một **Discord Webhook URL** trong server của bạn.
+2. Fork hoặc Clone repository này về máy.
 
-- Python 3.11
-- A Discord webhook URL
-
-## Local Setup
-
+### 2. Cài đặt môi trường (Local)
 ```bash
-python -m venv .venv
-.venv\Scripts\activate
+# Cài đặt thư viện
 pip install -r requirements.txt
-```
 
-Create a `.env` file in the repository root:
+# Tạo file .env và thêm Webhook của bạn
+echo "DISCORD_WEBHOOK_URL=your_webhook_url_here" > .env
 
-```env
-DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/your_webhook_here
-```
-
-Run the bot locally:
-
-```bash
+# Chạy thử
 python src/main.py
-```
-
-## GitHub Actions Setup
-
-Create a repository secret named `DISCORD_WEBHOOK_URL`:
-
-1. Go to `Settings` -> `Secrets and variables` -> `Actions`.
-2. Click `New repository secret`.
-3. Set the name to `DISCORD_WEBHOOK_URL`.
-4. Paste your Discord webhook URL as the value.
-
-The workflow is defined in [.github/workflows/daily_check.yml](.github/workflows/daily_check.yml) and currently runs on this cron schedule:
-
-```yaml
-0 1 * * *
-```
-
-That corresponds to 08:00 AM Vietnam time when the offset is UTC+7.
-
-## Discord Output
-
-On each run, the bot will:
-
-- Call CheapShark to fetch Steam deals.
-- Filter deals with discounts of 90% or higher.
-- Sort them by `% savings` descending.
-- Send them to Discord in chunks of up to 10 embeds.
-
-Each embed contains:
-
-- Game title
-- Steam Store link
-- Original price
-- Sale price
-- Discount percentage
-- Game header image
-
-## No-Deal Behavior
-
-If no deals meet the 90% threshold, the bot only writes a log message and does not send anything to Discord.
-
-## Environment Variables
-
-- `DISCORD_WEBHOOK_URL`: primary webhook URL.
-- `DISCORD_WEBHOOK`: fallback variable still accepted by `src/notifier.py`.
-
-## Dependencies
-
-- `requests`
-- `python-dotenv`
-- `pytz`
-
-## Encoding Note
-
-The repository should be saved in UTF-8. If your terminal displays broken characters, verify:
-
-- your editor is saving files as `UTF-8`
-- your PowerShell or terminal session is reading the correct encoding
-
-The repository includes [.editorconfig](.editorconfig) to reduce encoding-related issues in future edits.
-
-## Language Versions
-
-- English: [README.md](README.md)
-- Vietnamese: [README.vi.md](README.vi.md)

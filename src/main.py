@@ -3,7 +3,7 @@ from steam_api import get_top_deals
 from notifier import send_to_discord
 from dotenv import load_dotenv
 
-# Nạp biến môi trường từ file .env (nếu chạy ở máy cá nhân)
+# Nạp biến môi trường từ file .env (If running on Local)
 load_dotenv()
 
 def main():
